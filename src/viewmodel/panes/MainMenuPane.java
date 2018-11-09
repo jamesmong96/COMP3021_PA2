@@ -65,8 +65,6 @@ public class MainMenuPane extends BorderPane {
         settingsButton.getStyleClass().add("big-button");
         quitButton.getStyleClass().add("big-button");
 
-
-
     }
 
     /**
