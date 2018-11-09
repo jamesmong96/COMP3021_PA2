@@ -62,6 +62,15 @@ public class SettingsPane extends BorderPane {
      */
     private void styleComponents() {
         //TODO
+
+        leftContainer.getStyleClass().add("VBox");
+        returnButton.getStyleClass().add("Button");
+        toggleSoundFXButton.getStyleClass().add("Button");
+        centerContainer.getStyleClass().add("VBox");
+        infoText.getStyleClass().add("text-area");
+        infoText.editableProperty().setValue(false);
+        infoText.wrapTextProperty().setValue(true);
+
     }
 
     /**
