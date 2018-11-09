@@ -24,6 +24,17 @@ public class MainMenuPane extends BorderPane {
      */
     public MainMenuPane() {
         //TODO
+
+        container = new VBox();
+        title = new Label("Main Menu");
+        playButton = new Button("Play");
+        levelEditorButton = new Button("Level Editor");
+        settingsButton = new Button("Setting");
+        quitButton = new Button("Quit");
+
+        connectComponents();
+        styleComponents();
+        setCallbacks();
     }
 
     /**

@@ -27,6 +27,12 @@ public class SettingsPane extends BorderPane {
      */
     public SettingsPane() {
         //TODO
+
+        leftContainer = new VBox(20);
+        returnButton = new Button("return");
+        toggleSoundFXButton = new Button(AudioManager.getInstance().isEnabled()+"SoundFX");
+        centerContainer = new VBox(20);
+        infoText = new TextArea(Config.getAboutText());
     }
 
     /**
@@ -34,6 +40,13 @@ public class SettingsPane extends BorderPane {
      */
     private void connectComponents() {
         //TODO
+
+        leftContainer.getChildren().addAll(returnButton, toggleSoundFXButton);
+
+        centerContainer.getChildren().addAll(infoText);
+
+        this.setLeft(leftContainer);
+        this.setCenter(centerContainer);
     }
 
     /**

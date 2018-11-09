@@ -20,7 +20,7 @@ import static viewmodel.LevelEditorCanvas.Brush;
  * Represents the level editor in the game
  */
 public class LevelEditorPane extends BorderPane {
-    private final LevelEditorCanvas levelEditor;
+    //private final LevelEditorCanvas levelEditor;
     private VBox leftContainer;
     private Button returnButton;
     private Label rowText;

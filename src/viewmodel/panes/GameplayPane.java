@@ -23,7 +23,7 @@ import java.util.Optional;
  */
 public class GameplayPane extends BorderPane {
 
-    private final GameplayInfoPane info;
+    //private final GameplayInfoPane info;
     private VBox canvasContainer;
     private Canvas gamePlayCanvas;
     private HBox buttonBar;
