@@ -30,9 +30,15 @@ public class SettingsPane extends BorderPane {
 
         leftContainer = new VBox(20);
         returnButton = new Button("return");
-        toggleSoundFXButton = new Button(AudioManager.getInstance().isEnabled()+"SoundFX");
+        if (AudioManager.getInstance().isEnabled())
+            toggleSoundFXButton = new Button("Enabled SoundFX");
+        else toggleSoundFXButton = new Button("Disabled SoundFX");
         centerContainer = new VBox(20);
         infoText = new TextArea(Config.getAboutText());
+
+        connectComponents();
+        styleComponents();
+        setCallbacks();
     }
 
     /**
@@ -64,5 +70,11 @@ public class SettingsPane extends BorderPane {
      */
     private void setCallbacks() {
         //TODO
+        returnButton.setOnAction(event -> SceneManager.getInstance().showMainMenuScene());
+
+        if (AudioManager.getInstance().isEnabled())
+            toggleSoundFXButton.setOnAction(event -> AudioManager.getInstance().setEnabled(false));
+        else toggleSoundFXButton.setOnAction(event -> AudioManager.getInstance().setEnabled(true));
+
     }
 }
