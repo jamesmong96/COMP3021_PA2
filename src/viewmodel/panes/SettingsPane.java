@@ -29,7 +29,7 @@ public class SettingsPane extends BorderPane {
         //TODO
 
         leftContainer = new VBox(20);
-        returnButton = new Button("return");
+        returnButton = new Button("Return");
         if (AudioManager.getInstance().isEnabled())
             toggleSoundFXButton = new Button("Enabled SoundFX");
         else toggleSoundFXButton = new Button("Disabled SoundFX");
@@ -63,10 +63,10 @@ public class SettingsPane extends BorderPane {
     private void styleComponents() {
         //TODO
 
-        leftContainer.getStyleClass().add("VBox");
-        returnButton.getStyleClass().add("Button");
-        toggleSoundFXButton.getStyleClass().add("Button");
-        centerContainer.getStyleClass().add("VBox");
+        leftContainer.getStyleClass().add("big-vBox");
+        returnButton.getStyleClass().add("big-button");
+        toggleSoundFXButton.getStyleClass().add("big-button");
+        centerContainer.getStyleClass().add("big-vBox");
         infoText.getStyleClass().add("text-area");
         infoText.editableProperty().setValue(false);
         infoText.wrapTextProperty().setValue(true);

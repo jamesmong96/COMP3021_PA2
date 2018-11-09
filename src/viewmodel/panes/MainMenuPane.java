@@ -58,6 +58,13 @@ public class MainMenuPane extends BorderPane {
     private void styleComponents() {
         //TODO
 
+        container.getStyleClass().add("big-vbox");
+        title.getStyleClass().add("Label");
+        playButton.getStyleClass().add("big-button");
+        levelEditorButton.getStyleClass().add("big-button");
+        settingsButton.getStyleClass().add("big-button");
+        quitButton.getStyleClass().add("big-button");
+
 
 
     }
