@@ -63,10 +63,10 @@ public class SettingsPane extends BorderPane {
     private void styleComponents() {
         //TODO
 
-        leftContainer.getStyleClass().add("big-vBox");
+        leftContainer.getStyleClass().add("side-menu");
         returnButton.getStyleClass().add("big-button");
         toggleSoundFXButton.getStyleClass().add("big-button");
-        centerContainer.getStyleClass().add("big-vBox");
+        centerContainer.getStyleClass().add("big-vbox");
         infoText.getStyleClass().add("text-area");
         infoText.editableProperty().setValue(false);
         infoText.wrapTextProperty().setValue(true);
