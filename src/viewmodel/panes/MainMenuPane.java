@@ -26,7 +26,7 @@ public class MainMenuPane extends BorderPane {
         //TODO
 
         container = new VBox();
-        title = new Label("Main Menu");
+        title = new Label("Sokoban");
         playButton = new Button("Play");
         levelEditorButton = new Button("Level Editor");
         settingsButton = new Button("Setting");
