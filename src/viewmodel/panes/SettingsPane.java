@@ -4,6 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import viewmodel.AudioManager;
 import viewmodel.Config;
 import viewmodel.SceneManager;
@@ -31,8 +32,8 @@ public class SettingsPane extends BorderPane {
         leftContainer = new VBox(20);
         returnButton = new Button("Return");
         if (AudioManager.getInstance().isEnabled())
-            toggleSoundFXButton = new Button("Enabled SoundFX");
-        else toggleSoundFXButton = new Button("Disabled SoundFX");
+            toggleSoundFXButton = new Button("Enabled Sound FX");
+        else toggleSoundFXButton = new Button("Disabled Sound FX");
         centerContainer = new VBox(20);
         infoText = new TextArea(Config.getAboutText());
 
@@ -47,9 +48,8 @@ public class SettingsPane extends BorderPane {
     private void connectComponents() {
         //TODO
 
+        centerContainer.getChildren().add(infoText);
         leftContainer.getChildren().addAll(returnButton, toggleSoundFXButton);
-
-        centerContainer.getChildren().addAll(infoText);
 
         this.setLeft(leftContainer);
         this.setCenter(centerContainer);
@@ -70,6 +70,7 @@ public class SettingsPane extends BorderPane {
         infoText.getStyleClass().add("text-area");
         infoText.editableProperty().setValue(false);
         infoText.wrapTextProperty().setValue(true);
+        infoText.setPrefHeight();
 
     }
 

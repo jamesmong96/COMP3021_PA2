@@ -29,7 +29,7 @@ public class MainMenuPane extends BorderPane {
         title = new Label("Sokoban");
         playButton = new Button("Play");
         levelEditorButton = new Button("Level Editor");
-        settingsButton = new Button("About/Setting");
+        settingsButton = new Button("About / Setting");
         quitButton = new Button("Quit");
 
         connectComponents();
