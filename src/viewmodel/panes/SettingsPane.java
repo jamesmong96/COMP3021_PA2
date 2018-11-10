@@ -70,7 +70,7 @@ public class SettingsPane extends BorderPane {
         infoText.getStyleClass().add("text-area");
         infoText.editableProperty().setValue(false);
         infoText.wrapTextProperty().setValue(true);
-        infoText.setPrefHeight();
+        infoText.setPrefHeight(Config.HEIGHT);
 
     }
 
