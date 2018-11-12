@@ -4,10 +4,12 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import viewmodel.Config;
 import viewmodel.LevelEditorCanvas;
@@ -55,7 +57,7 @@ public class LevelEditorPane extends BorderPane {
         rowBox = new BorderPane();
         colBox = new BorderPane();
         newGridButton = new Button("New Grid");
-        //brushList.addAll(Brush.TILE, Brush.PLAYER_ON_TILE, Brush.PLAYER_ON_DEST, Brush.CRATE_ON_TILE, Brush.CRATE_ON_DEST, Brush.WALL, Brush.DEST);
+        brushList = FXCollections.observableArrayList();
         saveButton = new Button("Save");
         centerContainer = new VBox(20);
 
@@ -74,15 +76,21 @@ public class LevelEditorPane extends BorderPane {
     private void connectComponents() {
         //TODO
 
-        rowBox.getChildren().addAll(rowText, rowField);
+        var row = new HBox();
+        row.getChildren().addAll(rowText, rowField);
+
+        rowBox.getChildren().addAll(row);
         colBox.getChildren().addAll(colText, colField);
 
-        //selectedBrush.setItems(brushList);
+        brushList.addAll(Brush.TILE, Brush.PLAYER_ON_TILE, Brush.PLAYER_ON_DEST, Brush.CRATE_ON_TILE, Brush.CRATE_ON_DEST, Brush.WALL, Brush.DEST);
+        selectedBrush.setItems(brushList);
 
         leftContainer.getChildren().addAll(returnButton, rowBox, colBox, newGridButton, selectedBrush, saveButton);
 
         this.setLeft(leftContainer);
         this.setCenter(centerContainer);
+
+
     }
 
     /**
@@ -97,10 +105,11 @@ public class LevelEditorPane extends BorderPane {
         rowField.getStyleClass().add("text-field");
         colText.getStyleClass().add("Label");
         colField.getStyleClass().add("text-field");
-        rowBox.getStyleClass().add("big-hbox");
-        colBox.getStyleClass().add("big-hbox");
+//        rowBox.getStyleClass().add("big-hbox");
+//        colBox.getStyleClass().add("big-hbox");
         newGridButton.getStyleClass().add("big-button");
         selectedBrush.getStyleClass().add("list-cell");
+        selectedBrush.setPrefHeight(Config.LIST_CELL_HEIGHT * brushList.size());
         saveButton.getStyleClass().add("big-button");
         centerContainer.getStyleClass().add("big-vbox");
 
@@ -118,5 +127,8 @@ public class LevelEditorPane extends BorderPane {
      */
     private void setCallbacks() {
         //TODO
+
+        returnButton.setOnAction(event -> SceneManager.getInstance().showMainMenuScene());
+
     }
 }
