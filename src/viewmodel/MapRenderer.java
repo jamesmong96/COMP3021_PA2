@@ -50,6 +50,50 @@ public class MapRenderer {
      */
     static void render(Canvas canvas, LevelEditorCanvas.Brush[][] map) {
         //TODO
+
+        int row = map.length;
+        int col = map[0].length;
+
+        canvas.setHeight(row * LEVEL_EDITOR_TILE_SIZE);
+        canvas.setWidth(col * LEVEL_EDITOR_TILE_SIZE);
+
+        for (int i = 0; i < row; i++)
+            for (int j = 0; j < col; j++)
+                //set switch case for changing the map
+                switch (map[i][j]) {
+
+                    case WALL:
+                        canvas.getGraphicsContext2D().drawImage(wall, i * LEVEL_EDITOR_TILE_SIZE, j * LEVEL_EDITOR_TILE_SIZE);
+                        break;
+
+                    case CRATE_ON_TILE:
+                        canvas.getGraphicsContext2D().drawImage(crateOnTile, i * LEVEL_EDITOR_TILE_SIZE, j * LEVEL_EDITOR_TILE_SIZE);
+                        break;
+
+                    case CRATE_ON_DEST:
+                        canvas.getGraphicsContext2D().drawImage(crateOnDest, i * LEVEL_EDITOR_TILE_SIZE, j * LEVEL_EDITOR_TILE_SIZE);
+                        break;
+
+                    case PLAYER_ON_TILE:
+                        canvas.getGraphicsContext2D().drawImage(playerOnTile, i * LEVEL_EDITOR_TILE_SIZE, j * LEVEL_EDITOR_TILE_SIZE);
+                        break;
+
+                    case PLAYER_ON_DEST:
+                        canvas.getGraphicsContext2D().drawImage(playerOnDest, i * LEVEL_EDITOR_TILE_SIZE, j * LEVEL_EDITOR_TILE_SIZE);
+                        break;
+
+                    case DEST:
+                        canvas.getGraphicsContext2D().drawImage(dest, i * LEVEL_EDITOR_TILE_SIZE, j * LEVEL_EDITOR_TILE_SIZE);
+                        break;
+
+                    case TILE:
+                        canvas.getGraphicsContext2D().drawImage(tile, i * LEVEL_EDITOR_TILE_SIZE, j * LEVEL_EDITOR_TILE_SIZE);
+                        break;
+
+                    default:
+                        break;
+                }
+
     }
 
     /**

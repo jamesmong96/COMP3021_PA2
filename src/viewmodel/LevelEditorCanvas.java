@@ -33,6 +33,15 @@ public class LevelEditorCanvas extends Canvas {
      */
     public LevelEditorCanvas(int rows, int cols) {
         //TODO
+
+        super();
+
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j < cols; j++)
+                map[i][j] = Brush.TILE;
+
+
+
     }
 
     /**

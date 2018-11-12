@@ -3,13 +3,10 @@ package viewmodel.panes;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import viewmodel.Config;
 import viewmodel.LevelEditorCanvas;
@@ -22,7 +19,7 @@ import static viewmodel.LevelEditorCanvas.Brush;
  * Represents the level editor in the game
  */
 public class LevelEditorPane extends BorderPane {
-    //private final LevelEditorCanvas levelEditor;
+    private final LevelEditorCanvas levelEditor;
     private VBox leftContainer;
     private Button returnButton;
     private Label rowText;
@@ -60,6 +57,8 @@ public class LevelEditorPane extends BorderPane {
         brushList = FXCollections.observableArrayList();
         saveButton = new Button("Save");
         centerContainer = new VBox(20);
+
+        levelEditor = new LevelEditorCanvas(rowField.getValue(), colField.getValue());
 
         connectComponents();
         styleComponents();
