@@ -76,14 +76,15 @@ public class LevelEditorPane extends BorderPane {
     private void connectComponents() {
         //TODO
 
-        var row = new HBox();
-        row.getChildren().addAll(rowText, rowField);
+        rowBox.setLeft(rowText);
+        rowBox.setRight(rowField);
 
-        rowBox.getChildren().addAll(row);
-        colBox.getChildren().addAll(colText, colField);
+        colBox.setLeft(colText);
+        colBox.setRight(colField);
 
         brushList.addAll(Brush.TILE, Brush.PLAYER_ON_TILE, Brush.PLAYER_ON_DEST, Brush.CRATE_ON_TILE, Brush.CRATE_ON_DEST, Brush.WALL, Brush.DEST);
         selectedBrush.setItems(brushList);
+        selectedBrush.getSelectionModel().select(0);
 
         leftContainer.getChildren().addAll(returnButton, rowBox, colBox, newGridButton, selectedBrush, saveButton);
 
@@ -105,8 +106,6 @@ public class LevelEditorPane extends BorderPane {
         rowField.getStyleClass().add("text-field");
         colText.getStyleClass().add("Label");
         colField.getStyleClass().add("text-field");
-//        rowBox.getStyleClass().add("big-hbox");
-//        colBox.getStyleClass().add("big-hbox");
         newGridButton.getStyleClass().add("big-button");
         selectedBrush.getStyleClass().add("list-cell");
         selectedBrush.setPrefHeight(Config.LIST_CELL_HEIGHT * brushList.size());
