@@ -126,12 +126,11 @@ public class LevelEditorPane extends BorderPane {
     private void setCallbacks() {
         //TODO
 
+        saveButton.setOnAction(event -> levelEditor.saveToFile());
         newGridButton.setOnAction(event -> levelEditor.changeSize(rowField.getValue(), colField.getValue()));
         returnButton.setOnAction(event -> SceneManager.getInstance().showMainMenuScene());
-
         levelEditor.setOnMouseClicked(event -> levelEditor.setTile(selectedBrush.getSelectionModel().getSelectedItem(),
-                                                                                        event.getX(), event.getY()));
-
+                                                                    event.getX(), event.getY()));
 
     }
 }

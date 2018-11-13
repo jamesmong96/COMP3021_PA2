@@ -3,6 +3,7 @@ package viewmodel;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -133,6 +134,49 @@ public class LevelEditorCanvas extends Canvas {
      */
     public void saveToFile() {
         //TODO
+
+        if (isInvalidMap()) {
+
+            try {
+                var writer = new PrintWriter(getTargetSaveDirectory().getName());
+
+                writer.println(rows);
+                writer.println(cols);
+
+                for (int i = 0; i < rows; i++) {
+                    for (int j = 0; j < cols; j++)
+                        switch (map[i][j]) {
+                            case TILE:
+                                writer.print('.');
+                                break;
+
+                            case DEST:
+                                writer.print('C');
+                                break;
+
+                            case WALL:
+                                writer.print('#');
+                                break;
+
+                            case CRATE_ON_TILE:
+                                writer.print('c');
+                                break;
+
+                            case PLAYER_ON_TILE:
+                                writer.print('@');
+                                break;
+                        }
+
+                        writer.println();
+                }
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        return;
     }
 
     /**
@@ -144,7 +188,13 @@ public class LevelEditorCanvas extends Canvas {
      */
     private File getTargetSaveDirectory() {
         //TODO
-        return null;//NOTE: You may also need to modify this line
+
+        var chooser = new FileChooser();
+        chooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Normal text file", "*.txt"));
+
+        File temp = chooser.showSaveDialog(new Stage());
+
+        return temp;//NOTE: You may also need to modify this line
     }
 
     /**
