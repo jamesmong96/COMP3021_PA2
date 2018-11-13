@@ -147,23 +147,34 @@ public class LevelEditorCanvas extends Canvas {
                     for (int j = 0; j < cols; j++)
                         switch (map[i][j]) {
                             case TILE:
-                                writer.print('.');
+                                writer.print(Brush.TILE.rep);
                                 break;
 
                             case DEST:
-                                writer.print('C');
+                                writer.print(Brush.DEST.rep);
                                 break;
 
                             case WALL:
-                                writer.print('#');
+                                writer.print(Brush.WALL.rep);
                                 break;
 
                             case CRATE_ON_TILE:
-                                writer.print('c');
+                                writer.print(Brush.CRATE_ON_TILE.rep);
+                                break;
+
+                            case CRATE_ON_DEST:
+                                writer.print(Brush.CRATE_ON_DEST.rep);
                                 break;
 
                             case PLAYER_ON_TILE:
-                                writer.print('@');
+                                writer.print(Brush.PLAYER_ON_TILE.rep);
+                                break;
+
+                            case PLAYER_ON_DEST:
+                                writer.print(Brush.PLAYER_ON_DEST.rep);
+                                break;
+
+                            default:
                                 break;
                         }
 
@@ -212,6 +223,34 @@ public class LevelEditorCanvas extends Canvas {
      */
     private boolean isInvalidMap() {
         //TODO
+
+        if (rows < 3 || cols < 3)
+            return false;
+
+        if (oldPlayerRow < 0 || oldPlayerCol < 0)
+            return false;
+
+        int crateCount = 0;
+        int destCount = 0;
+
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j < cols; j++)
+                if (map[i][j] == Brush.CRATE_ON_TILE)
+                    crateCount += 1;
+                else if (map[i][j] == Brush.DEST || map[i][j] == Brush.PLAYER_ON_DEST)
+                    destCount += 1;
+                else if (map[i][j] == Brush.CRATE_ON_DEST) {
+                    crateCount += 1;
+                    destCount += 1;
+                }
+
+
+        if (crateCount != destCount)
+            return false;
+
+        if (crateCount < 1 || destCount < 1)
+            return false;
+
         return true;//NOTE: You may also need to modify this line
     }
 
