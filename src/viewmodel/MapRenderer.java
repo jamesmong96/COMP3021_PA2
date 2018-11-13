@@ -63,31 +63,31 @@ public class MapRenderer {
                 switch (map[i][j]) {
 
                     case WALL:
-                        canvas.getGraphicsContext2D().drawImage(wall, i * LEVEL_EDITOR_TILE_SIZE, j * LEVEL_EDITOR_TILE_SIZE);
+                        canvas.getGraphicsContext2D().drawImage(wall, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
                         break;
 
                     case CRATE_ON_TILE:
-                        canvas.getGraphicsContext2D().drawImage(crateOnTile, i * LEVEL_EDITOR_TILE_SIZE, j * LEVEL_EDITOR_TILE_SIZE);
+                        canvas.getGraphicsContext2D().drawImage(crateOnTile, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
                         break;
 
                     case CRATE_ON_DEST:
-                        canvas.getGraphicsContext2D().drawImage(crateOnDest, i * LEVEL_EDITOR_TILE_SIZE, j * LEVEL_EDITOR_TILE_SIZE);
+                        canvas.getGraphicsContext2D().drawImage(crateOnDest, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
                         break;
 
                     case PLAYER_ON_TILE:
-                        canvas.getGraphicsContext2D().drawImage(playerOnTile, i * LEVEL_EDITOR_TILE_SIZE, j * LEVEL_EDITOR_TILE_SIZE);
+                        canvas.getGraphicsContext2D().drawImage(playerOnTile, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
                         break;
 
                     case PLAYER_ON_DEST:
-                        canvas.getGraphicsContext2D().drawImage(playerOnDest, i * LEVEL_EDITOR_TILE_SIZE, j * LEVEL_EDITOR_TILE_SIZE);
+                        canvas.getGraphicsContext2D().drawImage(playerOnDest, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
                         break;
 
                     case DEST:
-                        canvas.getGraphicsContext2D().drawImage(dest, i * LEVEL_EDITOR_TILE_SIZE, j * LEVEL_EDITOR_TILE_SIZE);
+                        canvas.getGraphicsContext2D().drawImage(dest, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
                         break;
 
                     case TILE:
-                        canvas.getGraphicsContext2D().drawImage(tile, i * LEVEL_EDITOR_TILE_SIZE, j * LEVEL_EDITOR_TILE_SIZE);
+                        canvas.getGraphicsContext2D().drawImage(tile, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
                         break;
 
                     default:

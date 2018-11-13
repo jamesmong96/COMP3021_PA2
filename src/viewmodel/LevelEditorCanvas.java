@@ -34,7 +34,7 @@ public class LevelEditorCanvas extends Canvas {
     public LevelEditorCanvas(int rows, int cols) {
         //TODO
 
-        super(rows * LEVEL_EDITOR_TILE_SIZE, cols * LEVEL_EDITOR_TILE_SIZE);
+        super(cols * LEVEL_EDITOR_TILE_SIZE, rows * LEVEL_EDITOR_TILE_SIZE);
         this.rows = rows;
         this.cols = cols;
         resetMap(rows, cols);
