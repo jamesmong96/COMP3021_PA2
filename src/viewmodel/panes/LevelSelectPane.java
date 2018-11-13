@@ -33,6 +33,18 @@ public class LevelSelectPane extends BorderPane {
      */
     public LevelSelectPane() {
         //TODO
+        leftContainer = new VBox();
+        returnButton = new Button("Return");
+        playButton = new Button("Play");
+        chooseMapDirButton = new Button("Choose map directory");
+        levelsListView = new ListView<>();
+        centerContainer = new VBox();
+        levelPreview = new Canvas();
+
+        connectComponents();
+        styleComponents();
+        setCallbacks();
+
     }
 
     /**
@@ -41,6 +53,13 @@ public class LevelSelectPane extends BorderPane {
      */
     private void connectComponents() {
         //TODO
+
+        leftContainer.getChildren().addAll(returnButton, chooseMapDirButton, levelsListView, playButton);
+        centerContainer.getChildren().addAll(levelPreview);
+
+        this.setLeft(leftContainer);
+        this.setCenter(centerContainer);
+
     }
 
     /**
@@ -48,6 +67,13 @@ public class LevelSelectPane extends BorderPane {
      */
     private void styleComponents() {
         //TODO
+
+        leftContainer.getStyleClass().addAll("big-vbox", "side-menu");
+        returnButton.getStyleClass().add("big-button");
+        playButton.getStyleClass().add("big-button");
+        chooseMapDirButton.getStyleClass().add("big-button");
+        //levelsListView.getStyleClass().add("list-cell");
+        centerContainer.getStyleClass().add("big-vbox");
     }
 
     /**
@@ -63,6 +89,8 @@ public class LevelSelectPane extends BorderPane {
      */
     private void setCallbacks() {
         //TODO
+
+        returnButton.setOnAction(event -> SceneManager.getInstance().showMainMenuScene());
     }
 
     /**

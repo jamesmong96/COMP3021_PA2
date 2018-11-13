@@ -73,7 +73,7 @@ public class MainMenuPane extends BorderPane {
     private void setCallbacks() {
         //TODO
 
-        playButton.setOnAction(event -> SceneManager.getInstance().showGamePlayScene());
+        playButton.setOnAction(event -> SceneManager.getInstance().showLevelSelectMenuScene());
         levelEditorButton.setOnAction(event -> SceneManager.getInstance().showLevelEditorScene());
         settingsButton.setOnAction(event -> SceneManager.getInstance().showSettingsMenuScene());
         quitButton.setOnAction(event -> SceneManager.getInstance().getStage().close());

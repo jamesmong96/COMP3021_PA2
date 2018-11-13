@@ -50,7 +50,15 @@ public class AudioManager {
         if (!this.isEnabled())
             return;
         else {
+            Thread t = new Thread();
+            var media = new MediaPlayer(new Media(name));
+            soundPool.add(media);
 
+            t.setDaemon(true);
+            media.play();
+
+            soundPool.remove(media);
+            media.dispose();
         }
     }
 
