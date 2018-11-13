@@ -138,7 +138,7 @@ public class LevelEditorCanvas extends Canvas {
         if (isInvalidMap()) {
 
             try {
-                var writer = new PrintWriter(getTargetSaveDirectory().getName());
+                var writer = new PrintWriter(getTargetSaveDirectory());
 
                 writer.println(rows);
                 writer.println(cols);
@@ -170,10 +170,11 @@ public class LevelEditorCanvas extends Canvas {
                         writer.println();
                 }
 
+                writer.close();
+
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-
         }
 
         return;
