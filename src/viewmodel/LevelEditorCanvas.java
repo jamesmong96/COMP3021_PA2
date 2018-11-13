@@ -104,6 +104,10 @@ public class LevelEditorCanvas extends Canvas {
      */
     public void setTile(Brush brush, double x, double y) {
         //TODO
+
+        int row = (int) y / Config.LEVEL_EDITOR_TILE_SIZE;
+        int col = (int) x / Config.LEVEL_EDITOR_TILE_SIZE;
+
     }
 
     /**

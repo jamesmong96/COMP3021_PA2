@@ -1,6 +1,5 @@
 package viewmodel.panes;
 
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -127,8 +126,12 @@ public class LevelEditorPane extends BorderPane {
     private void setCallbacks() {
         //TODO
 
-        returnButton.setOnAction(event -> SceneManager.getInstance().showMainMenuScene());
         newGridButton.setOnAction(event -> levelEditor.changeSize(rowField.getValue(), colField.getValue()));
+        returnButton.setOnAction(event -> SceneManager.getInstance().showMainMenuScene());
+
+        levelEditor.setOnMouseClicked(event -> levelEditor.setTile(selectedBrush.getSelectionModel().getSelectedItem(),
+                                                                                        event.getX(), event.getY()));
+
 
     }
 }
