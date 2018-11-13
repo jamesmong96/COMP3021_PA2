@@ -47,10 +47,10 @@ public class AudioManager {
     private void playFile(String name) {
         //TODO
 
-        if (!this.isEnabled())
-            return;
-        else {
+        if (this.isEnabled())
 
+        else {
+            return;
         }
     }
 
