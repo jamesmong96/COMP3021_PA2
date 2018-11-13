@@ -4,9 +4,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import model.Map.Cell;
+import model.Map.Occupant.Crate;
+import model.Map.Occupant.Occupant;
 import model.Map.Occupant.Player;
 import model.Map.Occupiable.DestTile;
 import model.Map.Occupiable.Occupiable;
+import model.Map.Occupiable.Tile;
 
 import java.net.URISyntaxException;
 
@@ -106,5 +109,39 @@ public class MapRenderer {
      */
     public static void render(Canvas canvas, Cell[][] map) {
         //TODO
+
+        int row = map.length;
+        int col = map[0].length;
+
+        canvas.setHeight(row * LEVEL_EDITOR_TILE_SIZE);
+        canvas.setWidth(col * LEVEL_EDITOR_TILE_SIZE);
+
+        //use if statement to check tile/destTile/Wall, then check for player/crate
+        for (int i = 0; i < row; i++)
+            for (int j = 0; j < col; j++) {
+                //set switch case for changing the map
+                if (map[i][j] instanceof Tile) {
+                    if (((Tile) map[i][j]).getOccupant().isPresent()) {
+                        if (((Tile) map[i][j]).getOccupant().get() instanceof Player) {
+                            canvas.getGraphicsContext2D().drawImage(playerOnTile, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
+                        } else if (((Tile) map[i][j]).getOccupant().get() instanceof Crate) {
+                            canvas.getGraphicsContext2D().drawImage(crateOnTile, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
+                        }
+                    }
+                    else canvas.getGraphicsContext2D().drawImage(tile, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
+                }
+                else if (map[i][j] instanceof DestTile) {
+                    if (((DestTile) map[i][j]).getOccupant().isPresent()) {
+                        if (((DestTile) map[i][j]).getOccupant().get() instanceof Player) {
+                            canvas.getGraphicsContext2D().drawImage(playerOnDest, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
+                        } else if (((DestTile) map[i][j]).getOccupant().get() instanceof Crate) {
+                            canvas.getGraphicsContext2D().drawImage(crateOnDest, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
+                        }
+                    }
+                    else canvas.getGraphicsContext2D().drawImage(dest, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
+                }
+                else canvas.getGraphicsContext2D().drawImage(wall, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
+
+            }
     }
 }
