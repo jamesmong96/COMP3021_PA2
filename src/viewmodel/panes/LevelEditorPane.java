@@ -90,7 +90,6 @@ public class LevelEditorPane extends BorderPane {
         this.setLeft(leftContainer);
         this.setCenter(centerContainer);
 
-
     }
 
     /**
@@ -106,7 +105,7 @@ public class LevelEditorPane extends BorderPane {
         colText.getStyleClass().add("Label");
         colField.getStyleClass().add("text-field");
         newGridButton.getStyleClass().add("big-button");
-        selectedBrush.getStyleClass().add("list-cell");
+        //selectedBrush.getStyleClass().add("list-cell");
         selectedBrush.setPrefHeight(Config.LIST_CELL_HEIGHT * brushList.size());
         saveButton.getStyleClass().add("big-button");
         centerContainer.getStyleClass().add("big-vbox");

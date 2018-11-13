@@ -136,55 +136,56 @@ public class LevelEditorCanvas extends Canvas {
         //TODO
 
         if (isInvalidMap()) {
+            if (getTargetSaveDirectory() != null) {
+                try {
+                    var writer = new PrintWriter(getTargetSaveDirectory());
 
-            try {
-                var writer = new PrintWriter(getTargetSaveDirectory());
+                    writer.println(rows);
+                    writer.println(cols);
 
-                writer.println(rows);
-                writer.println(cols);
+                    for (int i = 0; i < rows; i++) {
+                        for (int j = 0; j < cols; j++)
+                            switch (map[i][j]) {
+                                case TILE:
+                                    writer.print(Brush.TILE.rep);
+                                    break;
 
-                for (int i = 0; i < rows; i++) {
-                    for (int j = 0; j < cols; j++)
-                        switch (map[i][j]) {
-                            case TILE:
-                                writer.print(Brush.TILE.rep);
-                                break;
+                                case DEST:
+                                    writer.print(Brush.DEST.rep);
+                                    break;
 
-                            case DEST:
-                                writer.print(Brush.DEST.rep);
-                                break;
+                                case WALL:
+                                    writer.print(Brush.WALL.rep);
+                                    break;
 
-                            case WALL:
-                                writer.print(Brush.WALL.rep);
-                                break;
+                                case CRATE_ON_TILE:
+                                    writer.print(Brush.CRATE_ON_TILE.rep);
+                                    break;
 
-                            case CRATE_ON_TILE:
-                                writer.print(Brush.CRATE_ON_TILE.rep);
-                                break;
+                                case CRATE_ON_DEST:
+                                    writer.print(Brush.CRATE_ON_DEST.rep);
+                                    break;
 
-                            case CRATE_ON_DEST:
-                                writer.print(Brush.CRATE_ON_DEST.rep);
-                                break;
+                                case PLAYER_ON_TILE:
+                                    writer.print(Brush.PLAYER_ON_TILE.rep);
+                                    break;
 
-                            case PLAYER_ON_TILE:
-                                writer.print(Brush.PLAYER_ON_TILE.rep);
-                                break;
+                                case PLAYER_ON_DEST:
+                                    writer.print(Brush.PLAYER_ON_DEST.rep);
+                                    break;
 
-                            case PLAYER_ON_DEST:
-                                writer.print(Brush.PLAYER_ON_DEST.rep);
-                                break;
-
-                            default:
-                                break;
-                        }
+                                default:
+                                    break;
+                            }
 
                         writer.println();
+                    }
+
+                    writer.close();
+
+                } catch (FileNotFoundException e) {
+                    return;
                 }
-
-                writer.close();
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             }
         }
 
@@ -206,6 +207,9 @@ public class LevelEditorCanvas extends Canvas {
 
         File temp = chooser.showSaveDialog(new Stage());
 
+        if (temp == null)
+            return null;
+
         return temp;//NOTE: You may also need to modify this line
     }
 
@@ -224,11 +228,9 @@ public class LevelEditorCanvas extends Canvas {
     private boolean isInvalidMap() {
         //TODO
 
-        if (rows < 3 || cols < 3)
-            return false;
-
-        if (oldPlayerRow < 0 || oldPlayerCol < 0)
-            return false;
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Error");
+        alert.setHeaderText("Could not save map!");
 
         int crateCount = 0;
         int destCount = 0;
@@ -244,12 +246,28 @@ public class LevelEditorCanvas extends Canvas {
                     destCount += 1;
                 }
 
-
-        if (crateCount != destCount)
+        if (crateCount < 1 || destCount < 1) {
+            alert.setContentText("Please create at least 1 crate and destination.");
+            alert.show();
             return false;
+        }
 
-        if (crateCount < 1 || destCount < 1)
+        if (crateCount != destCount) {
+            alert.setContentText("Imbalanced number of crates and destinations.");
+            alert.show();
             return false;
+        }
+
+        if (oldPlayerRow < 0 || oldPlayerCol < 0) {
+            alert.setContentText("Please add a player.");
+            alert.show();
+            return false;
+        }
+
+        if (rows < 3 || cols < 3) {
+            alert.setContentText("Minimum size is 3 rows and 3 cols.");
+            return false;
+        }
 
         return true;//NOTE: You may also need to modify this line
     }
