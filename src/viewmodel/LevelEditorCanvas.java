@@ -108,6 +108,23 @@ public class LevelEditorCanvas extends Canvas {
         int row = (int) y / Config.LEVEL_EDITOR_TILE_SIZE;
         int col = (int) x / Config.LEVEL_EDITOR_TILE_SIZE;
 
+        if (brush == Brush.PLAYER_ON_DEST || brush == Brush.PLAYER_ON_TILE) {
+
+            if (oldPlayerRow >= 0 && oldPlayerCol >= 0) {
+                if (map[oldPlayerRow][oldPlayerCol] == Brush.PLAYER_ON_DEST)
+                    map[oldPlayerRow][oldPlayerCol] = Brush.DEST;
+                if (map[oldPlayerRow][oldPlayerCol] == Brush.PLAYER_ON_TILE)
+                    map[oldPlayerRow][oldPlayerCol] = Brush.TILE;
+            }
+
+            oldPlayerRow = row;
+            oldPlayerCol = col;
+        }
+
+        map[row][col] = brush;
+
+        renderCanvas();
+
     }
 
     /**
