@@ -34,13 +34,10 @@ public class LevelEditorCanvas extends Canvas {
     public LevelEditorCanvas(int rows, int cols) {
         //TODO
 
-        super();
-
-        for (int i = 0; i < rows; i++)
-            for (int j = 0; j < cols; j++)
-                map[i][j] = Brush.TILE;
-
-
+        super(rows * LEVEL_EDITOR_TILE_SIZE, cols * LEVEL_EDITOR_TILE_SIZE);
+        this.rows = rows;
+        this.cols = cols;
+        resetMap(rows, cols);
 
     }
 
@@ -65,6 +62,15 @@ public class LevelEditorCanvas extends Canvas {
      */
     private void resetMap(int rows, int cols) {
         //TODO
+
+        map = new Brush[rows][cols];
+
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j < cols; j++)
+                map[i][j] = Brush.TILE;
+
+        renderCanvas();
+
     }
 
     /**
@@ -72,6 +78,9 @@ public class LevelEditorCanvas extends Canvas {
      */
     private void renderCanvas() {
         //TODO
+
+        MapRenderer.render(this, map);
+
     }
 
     /**

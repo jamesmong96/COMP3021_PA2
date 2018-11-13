@@ -86,6 +86,7 @@ public class LevelEditorPane extends BorderPane {
         selectedBrush.getSelectionModel().select(0);
 
         leftContainer.getChildren().addAll(returnButton, rowBox, colBox, newGridButton, selectedBrush, saveButton);
+        centerContainer.getChildren().addAll(levelEditor);
 
         this.setLeft(leftContainer);
         this.setCenter(centerContainer);
@@ -127,6 +128,7 @@ public class LevelEditorPane extends BorderPane {
         //TODO
 
         returnButton.setOnAction(event -> SceneManager.getInstance().showMainMenuScene());
+        newGridButton.setOnAction(event -> levelEditor.changeSize(rowField.getValue(), colField.getValue()));
 
     }
 }
