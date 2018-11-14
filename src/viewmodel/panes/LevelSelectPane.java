@@ -10,6 +10,7 @@ import javafx.stage.DirectoryChooser;
 import model.Exceptions.InvalidMapException;
 import model.LevelManager;
 import model.Map.Cell;
+import viewmodel.Config;
 import viewmodel.MapRenderer;
 import viewmodel.SceneManager;
 
@@ -73,6 +74,7 @@ public class LevelSelectPane extends BorderPane {
         playButton.getStyleClass().add("big-button");
         chooseMapDirButton.getStyleClass().add("big-button");
         //levelsListView.getStyleClass().add("list-cell");
+        levelsListView.setPrefHeight(Config.LIST_CELL_HEIGHT * 11);
         centerContainer.getStyleClass().add("big-vbox");
     }
 
@@ -91,6 +93,7 @@ public class LevelSelectPane extends BorderPane {
         //TODO
 
         returnButton.setOnAction(event -> SceneManager.getInstance().showMainMenuScene());
+
     }
 
     /**
