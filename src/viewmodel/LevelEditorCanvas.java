@@ -204,6 +204,7 @@ public class LevelEditorCanvas extends Canvas {
 
         var chooser = new FileChooser();
         chooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Normal text file", "*.txt"));
+        chooser.setTitle("Save Map");
 
         File temp = chooser.showSaveDialog(new Stage());
 

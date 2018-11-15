@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Exceptions.InvalidMapException;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -55,6 +56,13 @@ public class LevelManager {
      */
     public void loadLevelNamesFromDisk() {
         //TODO
+
+        levelNames.clear();
+
+        File dest = new File(mapDirectory);
+        for (int i = 0; i < dest.listFiles().length; i++)
+            levelNames.add(dest.listFiles()[i].getName());
+
     }
 
     public ObservableList<String> getLevelNames() {
@@ -77,6 +85,10 @@ public class LevelManager {
      */
     public void setLevel(String levelName) throws InvalidMapException {
         //TODO
+
+        this.curLevelNameProperty.setValue(levelName);
+        curGameLevelExistedDurationProperty().set(0);
+        gameLevel.loadMap(mapDirectory + "/" +levelName);
     }
 
     /**

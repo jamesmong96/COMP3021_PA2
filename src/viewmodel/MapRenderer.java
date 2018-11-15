@@ -120,17 +120,7 @@ public class MapRenderer {
         for (int i = 0; i < row; i++)
             for (int j = 0; j < col; j++) {
                 //set switch case for changing the map
-                if (map[i][j] instanceof Tile) {
-                    if (((Tile) map[i][j]).getOccupant().isPresent()) {
-                        if (((Tile) map[i][j]).getOccupant().get() instanceof Player) {
-                            canvas.getGraphicsContext2D().drawImage(playerOnTile, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
-                        } else if (((Tile) map[i][j]).getOccupant().get() instanceof Crate) {
-                            canvas.getGraphicsContext2D().drawImage(crateOnTile, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
-                        }
-                    }
-                    else canvas.getGraphicsContext2D().drawImage(tile, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
-                }
-                else if (map[i][j] instanceof DestTile) {
+                if (map[i][j] instanceof DestTile) {
                     if (((DestTile) map[i][j]).getOccupant().isPresent()) {
                         if (((DestTile) map[i][j]).getOccupant().get() instanceof Player) {
                             canvas.getGraphicsContext2D().drawImage(playerOnDest, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
@@ -139,6 +129,16 @@ public class MapRenderer {
                         }
                     }
                     else canvas.getGraphicsContext2D().drawImage(dest, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
+                }
+                else if (map[i][j] instanceof Tile) {
+                    if (((Tile) map[i][j]).getOccupant().isPresent()) {
+                        if (((Tile) map[i][j]).getOccupant().get() instanceof Player) {
+                            canvas.getGraphicsContext2D().drawImage(playerOnTile, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
+                        } else if (((Tile) map[i][j]).getOccupant().get() instanceof Crate) {
+                            canvas.getGraphicsContext2D().drawImage(crateOnTile, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
+                        }
+                    }
+                    else canvas.getGraphicsContext2D().drawImage(tile, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
                 }
                 else canvas.getGraphicsContext2D().drawImage(wall, j * LEVEL_EDITOR_TILE_SIZE, i * LEVEL_EDITOR_TILE_SIZE);
 
