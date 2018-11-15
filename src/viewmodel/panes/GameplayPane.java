@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Exceptions.InvalidMapException;
+import model.GameLevel;
 import model.LevelManager;
 import viewmodel.AudioManager;
 import viewmodel.MapRenderer;
@@ -23,7 +24,7 @@ import java.util.Optional;
  */
 public class GameplayPane extends BorderPane {
 
-    //private final GameplayInfoPane info;
+    private final GameplayInfoPane info;
     private VBox canvasContainer;
     private Canvas gamePlayCanvas;
     private HBox buttonBar;
@@ -37,6 +38,21 @@ public class GameplayPane extends BorderPane {
     public GameplayPane() {
         //TODO
 
+        info = new GameplayInfoPane(
+                LevelManager.getInstance().currentLevelNameProperty(),
+                LevelManager.getInstance().curGameLevelExistedDurationProperty(),
+                LevelManager.getInstance().curGameLevelNumRestartsProperty(),
+                LevelManager.getInstance().curGameLevelNumRestartsProperty()
+        );
+        canvasContainer = new VBox();
+        gamePlayCanvas = new Canvas();
+        buttonBar = new HBox();
+        restartButton = new Button("Restart");
+        quitToMenuButton = new Button("Quit to menu");
+
+        connectComponents();
+        styleComponents();
+        setCallbacks();
     }
 
     /**
@@ -44,6 +60,12 @@ public class GameplayPane extends BorderPane {
      */
     private void connectComponents() {
         //TODO
+
+        canvasContainer.getChildren().add(gamePlayCanvas);
+        buttonBar.getChildren().addAll(info, restartButton, quitToMenuButton);
+
+        this.setTop(canvasContainer);
+        this.setBottom(buttonBar);
     }
 
     /**
@@ -51,6 +73,9 @@ public class GameplayPane extends BorderPane {
      */
     private void styleComponents() {
         //TODO
+
+        canvasContainer.getStyleClass().add("big-vbox");
+        buttonBar.getStyleClass().addAll("big-hbox", "bottom-menu");
     }
 
     /**
