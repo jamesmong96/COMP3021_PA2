@@ -88,6 +88,8 @@ public class LevelManager {
 
         this.curLevelNameProperty.setValue(levelName);
         curGameLevelExistedDurationProperty().set(0);
+        resetLevelTimer();
+        resetNumRestarts();
         gameLevel.loadMap(mapDirectory + "/" +levelName);
     }
 
@@ -99,6 +101,14 @@ public class LevelManager {
      */
     public void startLevelTimer() {
         //TODO
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                curGameLevelExistedDuration.set(curGameLevelExistedDuration.getValue().intValue() + 1);
+            }
+        });
+
     }
 
     /**
@@ -130,7 +140,12 @@ public class LevelManager {
      */
     public String getNextLevelName() {
         //TODO
-        return null;//NOTE: You may also change this line
+
+        int current = levelNames.indexOf(currentLevelNameProperty().toString());
+
+        if (current < levelNames.size())
+            return levelNames.get(current + 1);
+        else return null;//NOTE: You may also change this line
     }
 
     public IntegerProperty curGameLevelExistedDurationProperty() {

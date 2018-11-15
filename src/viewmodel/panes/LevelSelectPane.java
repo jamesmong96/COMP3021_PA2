@@ -101,6 +101,17 @@ public class LevelSelectPane extends BorderPane {
 
         returnButton.setOnAction(event -> SceneManager.getInstance().showMainMenuScene());
         chooseMapDirButton.setOnAction(event -> this.promptUserForMapDirectory());
+        playButton.setOnAction(
+                event -> {
+                    try {
+                        LevelManager.getInstance().setLevel(levelsListView.getSelectionModel().getSelectedItem());
+                    } catch (InvalidMapException e) {
+                        return;
+                    }
+                }
+        );
+        playButton.setOnAction(event -> SceneManager.getInstance().showGamePlayScene());
+        playButton.setOnAction(event -> LevelManager.getInstance().startLevelTimer());
         levelsListView.getSelectionModel().selectedItemProperty().addListener(
                 event -> {
                     try {
@@ -114,6 +125,7 @@ public class LevelSelectPane extends BorderPane {
                 event -> MapRenderer.render(levelPreview, LevelManager.getInstance().getGameLevel().getMap().getCells())
         );
         levelsListView.getSelectionModel().selectedItemProperty().addListener(event -> playButton.setDisable(false));
+
     }
 
     /**
