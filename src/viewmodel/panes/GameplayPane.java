@@ -101,11 +101,10 @@ public class GameplayPane extends BorderPane {
 
         quitToMenuButton.setOnAction(event -> this.doQuitToMenuAction());
         restartButton.setOnAction(event -> this.doRestartAction());
-        this.setOnKeyPressed(event -> {
-
-            if (event.getCode() == KeyCode.S)
-                if (LevelManager.getInstance().getGameLevel().makeMove('s')) {
-                    AudioManager.getInstance().playMoveSound();
+        this.setOnKeyTyped(event -> {
+            if (event.getCharacter().length() == 1)
+                if (LevelManager.getInstance().getGameLevel().makeMove(event.getCharacter().charAt(0))) {
+                    //AudioManager.getInstance().playMoveSound();
                     LevelManager.getInstance().getGameLevel().numPushesProperty().set(LevelManager.getInstance().getGameLevel().numPushesProperty().get() + 1);
                     this.renderCanvas();
                     if (LevelManager.getInstance().getGameLevel().isWin())
