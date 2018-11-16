@@ -44,7 +44,7 @@ public class GameplayPane extends BorderPane {
         info = new GameplayInfoPane(
                 LevelManager.getInstance().currentLevelNameProperty(),
                 LevelManager.getInstance().curGameLevelExistedDurationProperty(),
-                LevelManager.getInstance().curGameLevelNumRestartsProperty(),
+                LevelManager.getInstance().getGameLevel().numPushesProperty(),
                 LevelManager.getInstance().curGameLevelNumRestartsProperty()
         );
         canvasContainer = new VBox();
@@ -105,11 +105,10 @@ public class GameplayPane extends BorderPane {
             if (event.getCharacter().length() == 1)
                 if (LevelManager.getInstance().getGameLevel().makeMove(event.getCharacter().charAt(0))) {
                     //AudioManager.getInstance().playMoveSound();
-                    LevelManager.getInstance().getGameLevel().numPushesProperty().set(LevelManager.getInstance().getGameLevel().numPushesProperty().get() + 1);
                     this.renderCanvas();
                     if (LevelManager.getInstance().getGameLevel().isWin())
                         this.createLevelClearPopup();
-                    if (LevelManager.getInstance().getGameLevel().isDeadlocked())
+                    else if (LevelManager.getInstance().getGameLevel().isDeadlocked())
                         this.createDeadlockedPopup();
                 }
         });
@@ -132,6 +131,7 @@ public class GameplayPane extends BorderPane {
 
         if (result.isPresent())
             if (result.get() == ButtonType.OK) {
+                LevelManager.getInstance().resetNumRestarts();
                 SceneManager.getInstance().showMainMenuScene();
             }
 
@@ -146,6 +146,30 @@ public class GameplayPane extends BorderPane {
      */
     private void createDeadlockedPopup() {
         //TODO
+
+        if (LevelManager.getInstance().getGameLevel().isDeadlocked()) {
+
+//            AudioManager.getInstance().playDeadlockSound();
+            Alert popup = new Alert(Alert.AlertType.CONFIRMATION);
+            popup.setTitle("Confirm");
+            popup.setHeaderText("Level deadlocked!");
+            ButtonType restart = new ButtonType("Restart");
+            ButtonType re_turn = new ButtonType("Return");
+            popup.getButtonTypes().setAll(restart, re_turn);
+            Optional<ButtonType> result = popup.showAndWait();
+
+            if (result.isPresent()) {
+                if (result.get() == restart)
+                    this.doRestartAction();
+                if (result.get() == re_turn) {
+                    LevelManager.getInstance().resetNumRestarts();
+                    SceneManager.getInstance().showLevelSelectMenuScene();
+                }
+            }
+        }
+
+        return;
+
     }
 
     /**
@@ -160,6 +184,37 @@ public class GameplayPane extends BorderPane {
      */
     private void createLevelClearPopup() {
         //TODO
+
+        if (LevelManager.getInstance().getGameLevel().isWin()) {
+
+//            AudioManager.getInstance().playWinSound();
+            Alert popup = new Alert(Alert.AlertType.CONFIRMATION);
+            popup.setTitle("Confirm");
+            popup.setHeaderText("Level cleared!");
+            ButtonType next = new ButtonType("Next level");
+            ButtonType re_turn = new ButtonType("Return");
+            popup.getButtonTypes().setAll(next, re_turn);
+            Optional<ButtonType> result = popup.showAndWait();
+
+            if (result.isPresent()) {
+                if (result.get() == next) {//probematic
+                    try {
+                        LevelManager.getInstance().setLevel(LevelManager.getInstance().getNextLevelName());
+                    } catch (InvalidMapException e) {
+                        return;
+                    }
+                    this.renderCanvas();
+                    LevelManager.getInstance().startLevelTimer();
+                    LevelManager.getInstance().resetNumRestarts();
+                }
+                if (result.get() == re_turn) {
+                    LevelManager.getInstance().resetNumRestarts();
+                    SceneManager.getInstance().showLevelSelectMenuScene();
+                }
+            }
+        }
+
+        return;
     }
 
     /**
@@ -169,14 +224,15 @@ public class GameplayPane extends BorderPane {
     private void doRestartAction() {
         //TODO
 
-//        LevelManager.getInstance().currentLevelNameProperty().setValue(LevelManager.getInstance().currentLevelNameProperty().getValue());
-//        try {
-//            LevelManager.getInstance().setLevel(LevelManager.getInstance().currentLevelNameProperty().getName());
-//        } catch (InvalidMapException e) {
-//            return;
-//        }
-//        renderCanvas();
-//        LevelManager.getInstance().incrementNumRestarts();
+        //LevelManager.getInstance().currentLevelNameProperty().setValue(LevelManager.getInstance().currentLevelNameProperty().getValue());
+        try {
+            LevelManager.getInstance().setLevel(LevelManager.getInstance().currentLevelNameProperty().getValue());
+        } catch (InvalidMapException e) {
+            return;
+        }
+        renderCanvas();
+        LevelManager.getInstance().startLevelTimer();
+        LevelManager.getInstance().incrementNumRestarts();
 
     }
 
