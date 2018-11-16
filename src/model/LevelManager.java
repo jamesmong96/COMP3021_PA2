@@ -102,12 +102,14 @@ public class LevelManager {
     public void startLevelTimer() {
         //TODO
 
-        Platform.runLater(new Runnable() {
+        curGameLevelExistedDurationProperty().set(0);
+
+        t.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                curGameLevelExistedDuration.set(curGameLevelExistedDuration.getValue().intValue() + 1);
+                Platform.runLater(() -> curGameLevelExistedDuration.set(curGameLevelExistedDuration.get() + 1));
             }
-        });
+        }, 1000, 1000);
 
     }
 

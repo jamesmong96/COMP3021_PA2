@@ -1,5 +1,6 @@
 package viewmodel.panes;
 
+import javafx.application.Preloader;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
@@ -76,6 +77,8 @@ public class GameplayPane extends BorderPane {
 
         canvasContainer.getStyleClass().add("big-vbox");
         buttonBar.getStyleClass().addAll("big-hbox", "bottom-menu");
+        restartButton.getStyleClass().add("big-button");
+        quitToMenuButton.getStyleClass().add("big-button");
     }
 
     /**
@@ -91,6 +94,8 @@ public class GameplayPane extends BorderPane {
      */
     private void setCallbacks() {
         //TODO
+
+        quitToMenuButton.setOnAction(event -> this.doQuitToMenuAction());
     }
 
     /**
@@ -100,6 +105,19 @@ public class GameplayPane extends BorderPane {
      */
     private void doQuitToMenuAction() {
         //TODO
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm");
+        alert.setHeaderText("Return to menu?");
+        alert.setContentText("Game progress will be lost.");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent())
+            if (result.get() == ButtonType.OK) {
+                SceneManager.getInstance().showMainMenuScene();
+            }
+
+        return;
     }
 
     /**

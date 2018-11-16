@@ -6,6 +6,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import model.LevelManager;
 
 import java.util.concurrent.Callable;
 
@@ -68,5 +69,11 @@ public class GameplayInfoPane extends VBox {
      */
     private void bindTo(StringProperty levelNameProperty, IntegerProperty timerProperty, IntegerProperty numMovesProperty, IntegerProperty numRestartsProperty) {
         //TODO
+
+        levelNameLabel.setText("Level: " + levelNameProperty.getValue());
+        timerLabel.textProperty().bind(Bindings.createStringBinding(() -> "Time: " + format(timerProperty.get()), timerProperty));
+        numMovesLabel.textProperty().bind(Bindings.createStringBinding(() -> "Moves: " + numMovesProperty.getValue().toString(), numMovesProperty));
+        numRestartsLabel.textProperty().bind(Bindings.createStringBinding(() -> "Restarts: " + numRestartsProperty.getValue().toString(), numRestartsProperty));
+
     }
 }

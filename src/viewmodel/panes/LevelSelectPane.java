@@ -108,10 +108,11 @@ public class LevelSelectPane extends BorderPane {
                     } catch (InvalidMapException e) {
                         return;
                     }
+
+                    SceneManager.getInstance().showGamePlayScene();
+                    LevelManager.getInstance().startLevelTimer();
                 }
         );
-        playButton.setOnAction(event -> SceneManager.getInstance().showGamePlayScene());
-        playButton.setOnAction(event -> LevelManager.getInstance().startLevelTimer());
         levelsListView.getSelectionModel().selectedItemProperty().addListener(
                 event -> {
                     try {
