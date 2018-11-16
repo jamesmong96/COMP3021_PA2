@@ -7,6 +7,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -62,10 +64,12 @@ public class GameplayPane extends BorderPane {
     private void connectComponents() {
         //TODO
 
+        MapRenderer.render(gamePlayCanvas, LevelManager.getInstance().getGameLevel().getMap().getCells());
+
         canvasContainer.getChildren().add(gamePlayCanvas);
         buttonBar.getChildren().addAll(info, restartButton, quitToMenuButton);
 
-        this.setTop(canvasContainer);
+        this.setCenter(canvasContainer);
         this.setBottom(buttonBar);
     }
 
@@ -96,6 +100,21 @@ public class GameplayPane extends BorderPane {
         //TODO
 
         quitToMenuButton.setOnAction(event -> this.doQuitToMenuAction());
+        restartButton.setOnAction(event -> this.doRestartAction());
+        this.setOnKeyPressed(event -> {
+
+            if (event.getCode() == KeyCode.S)
+                if (LevelManager.getInstance().getGameLevel().makeMove('s')) {
+                    AudioManager.getInstance().playMoveSound();
+                    LevelManager.getInstance().getGameLevel().numPushesProperty().set(LevelManager.getInstance().getGameLevel().numPushesProperty().get() + 1);
+                    this.renderCanvas();
+                    if (LevelManager.getInstance().getGameLevel().isWin())
+                        this.createLevelClearPopup();
+                    if (LevelManager.getInstance().getGameLevel().isDeadlocked())
+                        this.createDeadlockedPopup();
+                }
+        });
+
     }
 
     /**
@@ -150,6 +169,16 @@ public class GameplayPane extends BorderPane {
      */
     private void doRestartAction() {
         //TODO
+
+//        LevelManager.getInstance().currentLevelNameProperty().setValue(LevelManager.getInstance().currentLevelNameProperty().getValue());
+//        try {
+//            LevelManager.getInstance().setLevel(LevelManager.getInstance().currentLevelNameProperty().getName());
+//        } catch (InvalidMapException e) {
+//            return;
+//        }
+//        renderCanvas();
+//        LevelManager.getInstance().incrementNumRestarts();
+
     }
 
     /**
@@ -159,5 +188,8 @@ public class GameplayPane extends BorderPane {
      */
     private void renderCanvas() {
         //TODO
+
+        MapRenderer.render(gamePlayCanvas, LevelManager.getInstance().getGameLevel().getMap().getCells());
+
     }
 }
