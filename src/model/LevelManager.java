@@ -143,10 +143,10 @@ public class LevelManager {
     public String getNextLevelName() {
         //TODO
 
-        int current = levelNames.indexOf(currentLevelNameProperty().toString());
+        int current = levelNames.indexOf(currentLevelNameProperty().getValue());
 
         if (current < levelNames.size())
-            return levelNames.get(current + 2);
+            return levelNames.get(current + 1);
         else return null;//NOTE: You may also change this line
     }
 

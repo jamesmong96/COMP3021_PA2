@@ -70,7 +70,7 @@ public class GameplayInfoPane extends VBox {
     private void bindTo(StringProperty levelNameProperty, IntegerProperty timerProperty, IntegerProperty numMovesProperty, IntegerProperty numRestartsProperty) {
         //TODO
 
-        levelNameLabel.setText("Level: " + levelNameProperty.getValue());
+        levelNameLabel.textProperty().bind(Bindings.createStringBinding(() -> "Level: " + levelNameProperty.getValue(), levelNameProperty));
         timerLabel.textProperty().bind(Bindings.createStringBinding(() -> "Time: " + format(timerProperty.get()), timerProperty));
         numMovesLabel.textProperty().bind(Bindings.createStringBinding(() -> "Moves: " + numMovesProperty.getValue().toString(), numMovesProperty));
         numRestartsLabel.textProperty().bind(Bindings.createStringBinding(() -> "Restarts: " + numRestartsProperty.getValue().toString(), numRestartsProperty));

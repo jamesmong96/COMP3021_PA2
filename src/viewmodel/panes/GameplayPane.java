@@ -193,11 +193,13 @@ public class GameplayPane extends BorderPane {
             popup.setHeaderText("Level cleared!");
             ButtonType next = new ButtonType("Next level");
             ButtonType re_turn = new ButtonType("Return");
-            popup.getButtonTypes().setAll(next, re_turn);
+            if (LevelManager.getInstance().getNextLevelName() != null)
+                popup.getButtonTypes().setAll(next, re_turn);
+            else popup.getButtonTypes().setAll(re_turn);
             Optional<ButtonType> result = popup.showAndWait();
 
             if (result.isPresent()) {
-                if (result.get() == next) {//probematic
+                if (result.get() == next) {
                     try {
                         LevelManager.getInstance().setLevel(LevelManager.getInstance().getNextLevelName());
                     } catch (InvalidMapException e) {
