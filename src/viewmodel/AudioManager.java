@@ -48,7 +48,7 @@ public class AudioManager {
         //TODO
 
         if (!this.isEnabled())
-            return;
+            return
         else {
             Thread t = new Thread();
             var media = new MediaPlayer(new Media(name));
