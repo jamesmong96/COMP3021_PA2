@@ -5,7 +5,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 import model.Exceptions.InvalidMapException;
 import model.Map.Map;
 import model.Map.Occupant.Crate;
+import model.Map.Occupant.Player;
 import model.Map.Occupiable.DestTile;
+import model.Map.Occupiable.Occupiable;
+import model.Map.Wall;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -68,8 +71,25 @@ public class GameLevel {
      *
      * @return Whether deadlock has occurred
      */
+    //helper function for isDeadlocked()
+    //return true if the cell contains a player
+    public boolean isPlayer(int r, int c) {
+
+        if (map.getCells()[r][c] instanceof Wall)
+            return false;
+
+        if (!((Occupiable) map.getCells()[r][c]).getOccupant().isPresent())
+            return false;
+
+        if (((Occupiable) map.getCells()[r][c]).getOccupant().get() instanceof Player)
+            return true;
+        else return false;
+
+    }
+
     public boolean isDeadlocked() {
-        for (Crate c : map.getCrates()) {
+        //--------------------------original code by TA
+        /*for (Crate c : map.getCrates()) {
             boolean canMoveLR = map.isOccupiableAndNotOccupiedWithCrate(c.getR(), c.getC() - 1)
                     && map.isOccupiableAndNotOccupiedWithCrate(c.getR(), c.getC() + 1);
             boolean canMoveUD = map.isOccupiableAndNotOccupiedWithCrate(c.getR() - 1, c.getC()) &&
@@ -77,7 +97,71 @@ public class GameLevel {
             if (canMoveLR || canMoveUD)
                 return false;
         }
-        return true;
+        return true;*/
+
+
+        //problematic
+        int dead = 0;
+
+        for (int i = 0; i < map.getCrates().size(); i++) {
+
+            //reset flag
+            dead = 0;
+
+            int r = map.getCrates().get(i).getR();
+            int c = map.getCrates().get(i).getC();
+
+            //check for it is DestTile
+            if (map.getCells()[r][c] instanceof DestTile) {
+                continue;
+            }
+            //check all four directions
+            if (map.isOccupiableAndNotOccupiedWithCrate(r + 1, c)) {
+                if (map.isOccupiableAndNotOccupiedWithCrate(r - 1, c)) {
+                    continue;
+                }
+                else if (isPlayer(r - 1, c)) {
+                    continue;
+                }
+                else dead++;
+            }
+            else dead++;
+
+            if (map.isOccupiableAndNotOccupiedWithCrate(r - 1, c)) {
+                if (isPlayer(r + 1, c)) {
+                    continue;
+                }
+                else dead++;
+            }
+            else dead++;
+
+            if (map.isOccupiableAndNotOccupiedWithCrate(r, c + 1)) {
+                if (map.isOccupiableAndNotOccupiedWithCrate(r, c - 1)) {
+                    continue;
+                }
+                else if (isPlayer(r, c - 1)) {
+                    continue;
+                }
+                else dead++;
+            }
+            else dead++;
+
+            if (map.isOccupiableAndNotOccupiedWithCrate(r, c - 1)) {
+                if (isPlayer(r, c + 1)) {
+                    continue;
+                }
+                else dead++;
+            }
+            else dead++;
+
+            //if a crate is deadlocked in all four directions, dead in all four cases
+            if (dead == 4)
+            {
+                return true;
+            }
+        }
+
+        return false; // You may also modify this line.
     }
 
     /**
