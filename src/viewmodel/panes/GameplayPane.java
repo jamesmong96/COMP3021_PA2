@@ -104,7 +104,7 @@ public class GameplayPane extends BorderPane {
         this.setOnKeyTyped(event -> {
             if (event.getCharacter().length() == 1)
                 if (LevelManager.getInstance().getGameLevel().makeMove(event.getCharacter().charAt(0))) {
-                    //AudioManager.getInstance().playMoveSound();
+                    AudioManager.getInstance().playMoveSound();
                     this.renderCanvas();
                     if (LevelManager.getInstance().getGameLevel().isWin())
                         this.createLevelClearPopup();
@@ -134,8 +134,6 @@ public class GameplayPane extends BorderPane {
                 LevelManager.getInstance().resetNumRestarts();
                 SceneManager.getInstance().showMainMenuScene();
             }
-
-        return;
     }
 
     /**
@@ -149,7 +147,7 @@ public class GameplayPane extends BorderPane {
 
         if (LevelManager.getInstance().getGameLevel().isDeadlocked()) {
 
-//            AudioManager.getInstance().playDeadlockSound();
+            AudioManager.getInstance().playDeadlockSound();
             Alert popup = new Alert(Alert.AlertType.CONFIRMATION);
             popup.setTitle("Confirm");
             popup.setHeaderText("Level deadlocked!");
@@ -168,8 +166,6 @@ public class GameplayPane extends BorderPane {
             }
         }
 
-        return;
-
     }
 
     /**
@@ -187,7 +183,7 @@ public class GameplayPane extends BorderPane {
 
         if (LevelManager.getInstance().getGameLevel().isWin()) {
 
-//            AudioManager.getInstance().playWinSound();
+            AudioManager.getInstance().playWinSound();
             Alert popup = new Alert(Alert.AlertType.CONFIRMATION);
             popup.setTitle("Confirm");
             popup.setHeaderText("Level cleared!");
@@ -215,8 +211,6 @@ public class GameplayPane extends BorderPane {
                 }
             }
         }
-
-        return;
     }
 
     /**

@@ -1,8 +1,12 @@
 package viewmodel;
 
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import model.LevelManager;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -47,18 +51,16 @@ public class AudioManager {
     private void playFile(String name) {
         //TODO
 
-        if (!this.isEnabled())
-            return
-        else {
-            Thread t = new Thread();
-            var media = new MediaPlayer(new Media(name));
+        if (this.isEnabled()){
+            var media = new MediaPlayer(new Media(new File(System.getProperty("user.dir") + "/src/assets/audio/" + name + ".mp3").toURI().toString()));
             soundPool.add(media);
 
-            t.setDaemon(true);
             media.play();
 
-            soundPool.remove(media);
-            media.dispose();
+            media.setOnEndOfMedia(() -> {
+                soundPool.remove(media);
+                media.dispose();
+            });
         }
     }
 
