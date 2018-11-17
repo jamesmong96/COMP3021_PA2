@@ -145,7 +145,7 @@ public class LevelManager {
 
         int current = levelNames.indexOf(currentLevelNameProperty().getValue());
 
-        if (current < levelNames.size())
+        if (current < levelNames.size() - 1)
             return levelNames.get(current + 1);
         else return null;//NOTE: You may also change this line
     }
