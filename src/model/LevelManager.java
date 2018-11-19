@@ -84,7 +84,7 @@ public class LevelManager {
      * @param levelName The level name to set
      * @throws InvalidMapException if the map was invalid
      */
-    public void setLevel(String levelName) throws InvalidMapException {
+    public void setLevel(String levelName) throws InvalidMapException, FileNotFoundException {
         //TODO
 
         if (levelName == null)
@@ -93,7 +93,12 @@ public class LevelManager {
         curGameLevelExistedDurationProperty().set(0);
         this.getGameLevel().numPushesProperty().set(0);
         resetLevelTimer();
-        gameLevel.loadMap(mapDirectory + "/" + levelName);
+
+        //check map exist or not
+        File map = new File(mapDirectory + "/" + levelName);
+        if (map.exists())
+            gameLevel.loadMap(mapDirectory + "/" + levelName);
+        else throw new FileNotFoundException();
     }
 
     /**
@@ -151,6 +156,12 @@ public class LevelManager {
         if (current < levelNames.size() - 1)
             return levelNames.get(current + 1);
         else return null;//NOTE: You may also change this line
+    }
+
+    public void removeLevel(String name) {
+
+
+
     }
 
     public IntegerProperty curGameLevelExistedDurationProperty() {

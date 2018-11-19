@@ -33,7 +33,7 @@ public class LevelSelectPane extends BorderPane {
     private ListView<String> levelsListView;
     private VBox centerContainer;
     private Canvas levelPreview;
-
+    private ObservableList<String> fileList;
     /**
      * Instantiate the member components and connect and style them. Also set the callbacks.
      * Use 20 for VBox spacing
@@ -107,6 +107,8 @@ public class LevelSelectPane extends BorderPane {
                         LevelManager.getInstance().setLevel(levelsListView.getSelectionModel().getSelectedItem());
                     } catch (InvalidMapException e) {
                         return;
+                    } catch (FileNotFoundException e) {
+                        return;
                     }
 
                     SceneManager.getInstance().showGamePlayScene();
@@ -118,6 +120,8 @@ public class LevelSelectPane extends BorderPane {
                     try {
                         LevelManager.getInstance().setLevel(levelsListView.getSelectionModel().getSelectedItem());
                     } catch (InvalidMapException e) {
+                        return;
+                    } catch (FileNotFoundException e) {
                         return;
                     }
                 }
@@ -145,7 +149,7 @@ public class LevelSelectPane extends BorderPane {
         if (destFolder == null)
             return;
 
-        ObservableList<String> fileList = FXCollections.observableArrayList();
+        fileList = FXCollections.observableArrayList();
         int numOfMap = destFolder.listFiles().length;
 
         for (int i = 0; i < numOfMap; i++)

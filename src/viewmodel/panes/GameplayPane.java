@@ -16,10 +16,12 @@ import model.Exceptions.InvalidMapException;
 import model.GameLevel;
 import model.LevelManager;
 import viewmodel.AudioManager;
+import viewmodel.LevelEditorCanvas;
 import viewmodel.MapRenderer;
 import viewmodel.SceneManager;
 import viewmodel.customNodes.GameplayInfoPane;
 
+import java.io.FileNotFoundException;
 import java.util.Optional;
 
 /**
@@ -200,6 +202,20 @@ public class GameplayPane extends BorderPane {
                         LevelManager.getInstance().setLevel(LevelManager.getInstance().getNextLevelName());
                     } catch (InvalidMapException e) {
                         return;
+                    } catch (FileNotFoundException e) {
+                        Alert noMap = new Alert(Alert.AlertType.WARNING);
+                        noMap.setTitle("Error");
+                        noMap.setHeaderText(LevelManager.getInstance().currentLevelNameProperty().getValue() + " is missing");
+                        noMap.setContentText("Redirecting to the next exist map");
+                        noMap.show();
+
+                        try {
+                            LevelManager.getInstance().setLevel(LevelManager.getInstance().getNextLevelName());
+                        } catch (FileNotFoundException f) {
+                            return;
+                        } catch (InvalidMapException i) {
+                            return;
+                        }
                     }
                     this.renderCanvas();
                     LevelManager.getInstance().startLevelTimer();
@@ -224,6 +240,8 @@ public class GameplayPane extends BorderPane {
         try {
             LevelManager.getInstance().setLevel(LevelManager.getInstance().currentLevelNameProperty().getValue());
         } catch (InvalidMapException e) {
+            return;
+        } catch (FileNotFoundException e) {
             return;
         }
         renderCanvas();
