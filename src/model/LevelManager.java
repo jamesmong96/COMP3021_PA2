@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import model.Exceptions.InvalidMapException;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -86,11 +87,13 @@ public class LevelManager {
     public void setLevel(String levelName) throws InvalidMapException {
         //TODO
 
+        if (levelName == null)
+            return;
         this.curLevelNameProperty.setValue(levelName);
         curGameLevelExistedDurationProperty().set(0);
         this.getGameLevel().numPushesProperty().set(0);
         resetLevelTimer();
-        gameLevel.loadMap(mapDirectory + "/" +levelName);
+        gameLevel.loadMap(mapDirectory + "/" + levelName);
     }
 
     /**
