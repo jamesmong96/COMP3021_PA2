@@ -6,6 +6,8 @@ import model.Exceptions.InvalidMapException;
 import model.Map.Map;
 import model.Map.Occupant.Crate;
 import model.Map.Occupiable.DestTile;
+import model.Map.Occupiable.Tile;
+import model.Map.Wall;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -69,6 +71,26 @@ public class GameLevel {
      * @return Whether deadlock has occurred
      */
     public boolean isDeadlocked() {
+
+        boolean test = true; //for all crate cannot move anymore
+
+        for (int i = 0; i < map.getCrates().size(); i++) {
+
+            int r = map.getCrates().get(i).getR();
+            int c = map.getCrates().get(i).getC();
+
+            if (map.getCells()[r][c] instanceof DestTile)
+                continue;
+
+            if (map.getCells()[r - 1][c] instanceof Wall)
+                if (map.getCells()[r][c - 1] instanceof Wall || map.getCells()[r][c + 1] instanceof Wall)
+                    return true;
+
+            if (map.getCells()[r + 1][c] instanceof Wall)
+                if (map.getCells()[r][c - 1] instanceof Wall || map.getCells()[r][c + 1] instanceof Wall)
+                    return true;
+        }
+
         //--------------------------original code by TA
         for (Crate c : map.getCrates()) {
             boolean canMoveLR = map.isOccupiableAndNotOccupiedWithCrate(c.getR(), c.getC() - 1)
@@ -76,9 +98,11 @@ public class GameLevel {
             boolean canMoveUD = map.isOccupiableAndNotOccupiedWithCrate(c.getR() - 1, c.getC()) &&
                     map.isOccupiableAndNotOccupiedWithCrate(c.getR() + 1, c.getC());
             if (canMoveLR || canMoveUD)
-                return false;
+                test = false;
         }
-        return true;
+
+        return test;
+
     }
     /**
      * @param c The char corresponding to a move from the user
