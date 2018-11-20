@@ -21,6 +21,7 @@ import viewmodel.SceneManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 /**
  * Represents the main menu in the game
@@ -33,7 +34,6 @@ public class LevelSelectPane extends BorderPane {
     private ListView<String> levelsListView;
     private VBox centerContainer;
     private Canvas levelPreview;
-    private ObservableList<String> fileList;
     /**
      * Instantiate the member components and connect and style them. Also set the callbacks.
      * Use 20 for VBox spacing
@@ -149,7 +149,7 @@ public class LevelSelectPane extends BorderPane {
         if (destFolder == null)
             return;
 
-        fileList = FXCollections.observableArrayList();
+        ObservableList<String> fileList = FXCollections.observableArrayList();
         int numOfMap = destFolder.listFiles().length;
 
         for (int i = 0; i < numOfMap; i++)
