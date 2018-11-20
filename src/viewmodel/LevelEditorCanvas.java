@@ -121,6 +121,10 @@ public class LevelEditorCanvas extends Canvas {
             oldPlayerRow = row;
             oldPlayerCol = col;
         }
+        else if (map[row][col] == Brush.PLAYER_ON_DEST || map[row][col] == Brush.PLAYER_ON_TILE) {
+            oldPlayerRow = -1;
+            oldPlayerCol = -1;
+        }
 
         map[row][col] = brush;
 
@@ -136,7 +140,6 @@ public class LevelEditorCanvas extends Canvas {
         //TODO
 
         if (isInvalidMap()) {
-            if (getTargetSaveDirectory() != null) {
                 try {
                     var writer = new PrintWriter(getTargetSaveDirectory());
 
@@ -185,8 +188,9 @@ public class LevelEditorCanvas extends Canvas {
 
                 } catch (FileNotFoundException e) {
                     return;
+                } catch (NullPointerException e) {
+                    return;
                 }
-            }
         }
 
         return;
@@ -267,6 +271,7 @@ public class LevelEditorCanvas extends Canvas {
 
         if (rows < 3 || cols < 3) {
             alert.setContentText("Minimum size is 3 rows and 3 cols.");
+            alert.show();
             return false;
         }
 
