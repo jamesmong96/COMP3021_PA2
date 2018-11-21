@@ -65,6 +65,8 @@ public class LevelEditorCanvas extends Canvas {
         //TODO
 
         map = new Brush[rows][cols];
+        oldPlayerCol = -1;
+        oldPlayerRow = -1;
 
         for (int i = 0; i < rows; i++)
             for (int j = 0; j < cols; j++)
