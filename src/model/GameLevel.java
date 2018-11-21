@@ -2,7 +2,9 @@ package model;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.control.Alert;
 import model.Exceptions.InvalidMapException;
+import model.Exceptions.UnknownElementException;
 import model.Map.Map;
 import model.Map.Occupant.Crate;
 import model.Map.Occupiable.DestTile;
@@ -55,6 +57,8 @@ public class GameLevel {
             map.initialize(numRows, numCols, rep);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new UnknownElementException("The map is invalid");
         }
     }
 

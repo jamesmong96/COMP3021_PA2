@@ -22,6 +22,7 @@ import viewmodel.SceneManager;
 import viewmodel.customNodes.GameplayInfoPane;
 
 import java.io.FileNotFoundException;
+import java.nio.BufferUnderflowException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -202,6 +203,31 @@ public class GameplayPane extends BorderPane {
                     try {
                         LevelManager.getInstance().setLevel(LevelManager.getInstance().getNextLevelName());
                     } catch (InvalidMapException e) {
+                        Alert pop = new Alert(Alert.AlertType.WARNING);
+                        pop.setTitle("Invalid map");
+                        pop.setHeaderText("The next map is invalid");
+                        pop.setContentText("Press OK quit to main menu or Cancel to the next valid level");
+                        pop.getButtonTypes().add(ButtonType.CANCEL);
+                        Optional<ButtonType> popresult = pop.showAndWait();
+
+                        if (popresult.isPresent()) {
+                            if (popresult.get() == ButtonType.OK) {
+                                LevelManager.getInstance().resetNumRestarts();
+                                SceneManager.getInstance().showMainMenuScene();
+                            }
+                            else if (popresult.get() == ButtonType.CANCEL) {
+                                try {
+                                    LevelManager.getInstance().setLevel(LevelManager.getInstance().getNextLevelName());
+                                    renderCanvas();
+                                    LevelManager.getInstance().startLevelTimer();
+                                } catch (FileNotFoundException f) {
+                                    return;
+                                } catch (InvalidMapException i) {
+                                    return;
+                                }
+                            }
+                        }
+
                         return;
                     } catch (FileNotFoundException e) {
                         Alert noMap = new Alert(Alert.AlertType.WARNING);
@@ -212,6 +238,8 @@ public class GameplayPane extends BorderPane {
 
                         try {
                             LevelManager.getInstance().setLevel(LevelManager.getInstance().getNextLevelName());
+                            renderCanvas();
+                            LevelManager.getInstance().startLevelTimer();
                         } catch (FileNotFoundException f) {
                             return;
                         } catch (InvalidMapException i) {
