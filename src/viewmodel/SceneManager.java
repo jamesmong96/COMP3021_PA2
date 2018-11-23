@@ -54,7 +54,6 @@ public class SceneManager {
     }
 
     public void showLevelSelectMenuScene() {
-//        LevelManager.getInstance().loadLevelNamesFromDisk();
         showScene(levelSelectScene);
     }
 

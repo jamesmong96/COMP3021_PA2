@@ -210,14 +210,18 @@ public class GameplayPane extends BorderPane {
                         pop.getButtonTypes().add(ButtonType.CANCEL);
                         Optional<ButtonType> popresult = pop.showAndWait();
 
+                        String target = LevelManager.getInstance().currentLevelNameProperty().getValue();
+
                         if (popresult.isPresent()) {
                             if (popresult.get() == ButtonType.OK) {
                                 LevelManager.getInstance().resetNumRestarts();
                                 SceneManager.getInstance().showMainMenuScene();
+                                LevelManager.getInstance().removeLevel(target);
                             }
                             else if (popresult.get() == ButtonType.CANCEL) {
                                 try {
                                     LevelManager.getInstance().setLevel(LevelManager.getInstance().getNextLevelName());
+                                    LevelManager.getInstance().removeLevel(target);
                                     renderCanvas();
                                     LevelManager.getInstance().startLevelTimer();
                                 } catch (FileNotFoundException f) {
@@ -236,8 +240,11 @@ public class GameplayPane extends BorderPane {
                         noMap.setContentText("Redirecting to the next exist map");
                         noMap.show();
 
+                        String target = LevelManager.getInstance().currentLevelNameProperty().getValue();
+
                         try {
                             LevelManager.getInstance().setLevel(LevelManager.getInstance().getNextLevelName());
+                            LevelManager.getInstance().removeLevel(target);
                             renderCanvas();
                             LevelManager.getInstance().startLevelTimer();
                         } catch (FileNotFoundException f) {

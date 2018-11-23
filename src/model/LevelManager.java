@@ -159,9 +159,11 @@ public class LevelManager {
     }
 
     public void removeLevel(String name) {
+        levelNames.remove(name);
+    }
 
-
-
+    public String getMapDirectory() {
+        return mapDirectory;
     }
 
     public IntegerProperty curGameLevelExistedDurationProperty() {

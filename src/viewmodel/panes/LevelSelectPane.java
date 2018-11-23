@@ -100,6 +100,7 @@ public class LevelSelectPane extends BorderPane {
     private void setCallbacks() {
         //TODO
 
+        setOnMouseMoved(event -> refreshLevelListView());
         returnButton.setOnAction(event -> SceneManager.getInstance().showMainMenuScene());
         chooseMapDirButton.setOnAction(event -> this.promptUserForMapDirectory());
         playButton.setOnAction(
@@ -172,5 +173,11 @@ public class LevelSelectPane extends BorderPane {
         levelsListView.setItems(fileList);
         LevelManager.getInstance().setMapDirectory(destFolder.getPath());
         LevelManager.getInstance().loadLevelNamesFromDisk();
+    }
+
+    public void refreshLevelListView() {
+        if (LevelManager.getInstance().getLevelNames() != levelsListView.getItems())
+            levelsListView.getItems().clear();
+            levelsListView.setItems(LevelManager.getInstance().getLevelNames());
     }
 }
